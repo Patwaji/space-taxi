@@ -69,6 +69,11 @@ body {
   50% { opacity: 1; }
 }
 
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 body::before {
     content: '';
     position: fixed;
@@ -221,6 +226,30 @@ body::before {
 }
 .nav__links a:hover { color: #0ff; }
 .nav__links a:hover::after { width: 100%; }
+
+.nav__checkbox {
+  display: none;
+}
+
+/* Hamburger icon */
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 200;
+}
+
+.nav__toggle span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: #92e6a7;
+  border-radius: 3px;
+  transition: 0.3s;
+}
 
 /* --- Hero --- */
 .hero {
@@ -383,3 +412,146 @@ body::before {
 /* --- Footer --- */
 .main-footer { padding: 20px; text-align: center; background: #05051a; border-top: 1px solid rgba(255,255,255,0.1); }
 .main-footer p { font-size: 0.9rem; color: #888; }
+
+
+/* --- Responsive Design --- */
+@media (max-width: 1024px) {
+  .nav__links {
+    gap: 20px;
+  }
+
+  .service-card,
+  .pricing-card {
+    max-width: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav__toggle {
+    display: flex;
+  }
+
+  .nav__links {
+    position: absolute;
+    top: 100%;       /* right below navbar */
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    border-radius: 0 0 15px 15px;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    display: none;
+    z-index: 150;    /* above planet & rocket */
+  }
+
+  /* Show menu when checkbox checked */
+  .nav__checkbox:checked ~ .nav__links {
+    display: flex;
+    animation: slideDown 0.3s ease forwards;
+  }
+
+  /* Animate hamburger → "X" */
+  .nav__checkbox:checked + .nav__toggle span:nth-child(1) {
+    transform: rotate(45deg) translateY(8px);
+  }
+  .nav__checkbox:checked + .nav__toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav__checkbox:checked + .nav__toggle span:nth-child(3) {
+    transform: rotate(-45deg) translateY(-8px);
+  }
+
+  .hero {
+    min-height: 100dvh;  /* ensures it matches the real visible screen */
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero__content {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;   /* remove absolute centering */
+    width: 90%;
+    text-align: center;
+  }
+
+  .hero__headline {
+    margin-top: 10px;
+    font-size: 1.8rem;
+  }
+
+  .hero__subheadline {
+    font-size: 1rem;
+  }
+
+  .hero__cta-button {
+    padding: 12px 25px;
+    font-size: 1rem;
+  }
+
+  .planet {
+    width: 180px;
+    height: 180px;
+  }
+
+  .rocket {
+    width: 35px;
+  }
+
+  .services__container,
+  .pricing__container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .service-card,
+  .pricing-card {
+    max-width: 90%;
+  }
+
+  .contact__form {
+    width: 100%;
+    padding: 0 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav__logo {
+    font-size: 1.2rem;
+  }
+
+  .hero__headline {
+    font-size: 1.5rem;
+  }
+
+  .hero__subheadline {
+    font-size: 0.9rem;
+  }
+
+  .hero__cta-button {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+
+  .service-card,
+  .pricing-card {
+    padding: 20px;
+  }
+
+  .contact__form input,
+  .contact__form textarea {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .contact__form button {
+    font-size: 1rem;
+    padding: 12px;
+  }
+}
